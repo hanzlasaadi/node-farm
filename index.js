@@ -34,6 +34,10 @@ server.listen("8080", "127.0.0.1", () => {
 });
 */
 
+const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf8");
+const dataObj = JSON.parse(data);
+// console.log(data);
+
 //Routes
 const server = http.createServer((req, res) => {
   //   console.log(req.url);
@@ -46,6 +50,10 @@ const server = http.createServer((req, res) => {
       break;
     case "/product":
       res.end("You are on the product page.");
+      break;
+    case "/api":
+      res.writeHead(200, { "Content-type": "application/json" });
+      res.end(data);
       break;
     default:
       res.writeHead(404, {
