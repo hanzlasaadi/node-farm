@@ -48,10 +48,13 @@ const server = http.createServer((req, res) => {
       res.end("You are on the product page.");
       break;
     default:
-      res.end("Page not found!");
+      res.writeHead(404, {
+        "Content-Type": "text/html",
+        "my-own-header": "Fuck the world",
+      });
+      res.end("<h1>Page not found!</h1>");
       break;
   }
-  //   res.end("Routing!");
 });
 
 server.listen("8080", "127.0.0.1", () => {
