@@ -33,3 +33,27 @@ server.listen("8080", "127.0.0.1", () => {
   console.log("Started listening on port 8080");
 });
 */
+
+//Routes
+const server = http.createServer((req, res) => {
+  //   console.log(req.url);
+  const reqPathName = req.url;
+
+  switch (reqPathName) {
+    case "/":
+    case "/home":
+      res.end("You are on home page.");
+      break;
+    case "/product":
+      res.end("You are on the product page.");
+      break;
+    default:
+      res.end("Page not found!");
+      break;
+  }
+  //   res.end("Routing!");
+});
+
+server.listen("8080", "127.0.0.1", () => {
+  console.log("Started listening on port 8080");
+});
