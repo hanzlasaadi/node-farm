@@ -1,6 +1,7 @@
 const fs = require("fs");
 const http = require("http");
 const url = require("url");
+const getTemplate = require("./modules/getTemplate");
 
 /*
 //-------------Files---------------
@@ -33,21 +34,6 @@ server.listen("8080", "127.0.0.1", () => {
   console.log("Started listening on port 8080");
 });
 */
-
-const getTemplate = (obj, markup) => {
-  let output = markup.replace(/{%IMAGE%}/g, obj.image);
-  output = output.replace(/{%PRODUCTNAME%}/g, obj.productName);
-  output = output.replace(/{%ID%}/g, obj.id);
-  output = output.replace(/{%FROM%}/g, obj.from);
-  output = output.replace(/{%QUANTITY%}/g, obj.quantity);
-  output = output.replace(/{%NUTRIENTS%}/g, obj.nutrients);
-  output = output.replace(/{%PRICE%}/g, obj.price);
-  output = output.replace(/{%DESCRIPTION%}/g, obj.description);
-
-  if (!obj.organic) output = output.replace(/{%NOT_ORGANIC%}/g, "not-organic");
-
-  return output;
-};
 
 const tempOverview = fs.readFileSync(
   `${__dirname}/templates/template-overview.html`,
