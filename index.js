@@ -44,7 +44,7 @@ const getTemplate = (obj, markup) => {
   output = output.replace(/{%PRICE%}/g, obj.price);
   output = output.replace(/{%DESCRIPTION%}/g, obj.description);
 
-  if (!obj.organic) output = output.replace(/{%ORGANIC%}/g, "not-organic");
+  if (!obj.organic) output = output.replace(/{%NOT_ORGANIC%}/g, "not-organic");
 
   return output;
 };
@@ -64,13 +64,15 @@ const tempProduct = fs.readFileSync(
 
 //Routes
 const server = http.createServer((req, res) => {
-  const reqPathName = req.url;
   const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf8");
   const dataObj = JSON.parse(data);
 
-  switch (reqPathName) {
+  // const reqPathName = req.url;
+  const { pathname, query } = url.parse(req.url, true);
+
+  switch (pathname) {
     case "/":
-    case "/home":
+    case "/overview":
       const cards = dataObj
         .map((data) => getTemplate(data, tempCards))
         .join("");
@@ -78,7 +80,8 @@ const server = http.createServer((req, res) => {
       res.end(output);
       break;
     case "/product":
-      res.end("You are on the product page.");
+      const outputCard = getTemplate(dataObj[query.id], tempProduct);
+      res.end(outputCard);
       break;
     case "/api":
       res.writeHead(200, { "Content-type": "application/json" });
