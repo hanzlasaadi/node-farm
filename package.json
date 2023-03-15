@@ -1,0 +1,17 @@
+{
+  "name": "node-farm-hanzla",
+  "version": "1.0.0",
+  "description": "A Node.js application that uses a JSON data to display food using a HTTP server and changing HTML markup based on the requests made by the browser.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "Hanzla Saadi",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  },
+  "dependencies": {
+    "slugify": "^1.6.5"
+  }
+}

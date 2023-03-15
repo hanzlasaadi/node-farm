@@ -1,4 +1,6 @@
-module.exports = (obj, markup) => {
+module.exports = (obj, markup, i, slugs) => {
+  obj.productName = slugs[i];
+
   let output = markup.replace(/{%IMAGE%}/g, obj.image);
   output = output.replace(/{%PRODUCTNAME%}/g, obj.productName);
   output = output.replace(/{%ID%}/g, obj.id);
