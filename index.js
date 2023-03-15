@@ -32,7 +32,7 @@ const server = http.createServer((req, res) => {
 server.listen("8080", "127.0.0.1", () => {
   console.log("Started listening on port 8080");
 });
-*/
+
 
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf8");
 const dataObj = JSON.parse(data);
@@ -68,3 +68,4 @@ const server = http.createServer((req, res) => {
 server.listen("8080", "127.0.0.1", () => {
   console.log("Started listening on port 8080");
 });
+*/
