@@ -10,7 +10,7 @@ module.exports = (obj, markup, i, slugs) => {
   output = output.replace(/{%PRICE%}/g, obj.price);
   output = output.replace(/{%DESCRIPTION%}/g, obj.description);
 
-  if (!obj.organic) output = output.replace(/{%NOT_ORGANIC%}/g, "not-organic");
+  if (!obj.organic) output = output.replace(/{%NOT_ORGANIC%}/g, 'not-organic');
 
   return output;
 };

@@ -1,10 +1,10 @@
-const fs = require("fs");
-const http = require("http");
-const url = require("url");
+const fs = require('fs');
+const http = require('http');
+const url = require('url');
 
-const { default: slugify } = require("slugify");
+const { default: slugify } = require('slugify');
 
-const getTemplate = require("./modules/getTemplate");
+const getTemplate = require('./modules/getTemplate');
 
 /*
 //-------------Files---------------
@@ -40,20 +40,20 @@ server.listen("8080", "127.0.0.1", () => {
 
 const tempOverview = fs.readFileSync(
   `${__dirname}/templates/template-overview.html`,
-  "utf8"
+  'utf8'
 );
 const tempCards = fs.readFileSync(
   `${__dirname}/templates/template-cards.html`,
-  "utf8"
+  'utf8'
 );
 const tempProduct = fs.readFileSync(
   `${__dirname}/templates/template-product.html`,
-  "utf8"
+  'utf8'
 );
 
 //Routes
 const server = http.createServer((req, res) => {
-  const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf8");
+  const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf8');
   const dataObj = JSON.parse(data);
 
   const slugs = dataObj.map((el) => slugify(el.productName, { lower: true }));
@@ -62,33 +62,33 @@ const server = http.createServer((req, res) => {
   const { pathname, query } = url.parse(req.url, true);
 
   switch (pathname) {
-    case "/":
-    case "/overview":
+    case '/':
+    case '/overview':
       console.log(slugs);
       const cards = dataObj
         .map((data, i) => getTemplate(data, tempCards, i, slugs))
-        .join("");
-      const output = tempOverview.replace("{%CARDS%}", cards);
+        .join('');
+      const output = tempOverview.replace('{%CARDS%}', cards);
       res.end(output);
       break;
-    case "/product":
+    case '/product':
       const outputCard = getTemplate(dataObj[query.id], tempProduct);
       res.end(outputCard);
       break;
-    case "/api":
-      res.writeHead(200, { "Content-type": "application/json" });
+    case '/api':
+      res.writeHead(200, { 'Content-type': 'application/json' });
       res.end(data);
       break;
     default:
       res.writeHead(404, {
-        "Content-Type": "text/html",
-        "my-own-header": "Fuck the world",
+        'Content-Type': 'text/html',
+        'my-own-header': 'Fuck the world',
       });
-      res.end("<h1>Page not found!</h1>");
+      res.end('<h1>Page not found!</h1>');
       break;
   }
 });
 
-server.listen("8080", "127.0.0.1", () => {
-  console.log("Started listening on port 8080");
+server.listen('8080', '127.0.0.1', () => {
+  console.log('Started listening on port 8080');
 });
