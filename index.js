@@ -55,8 +55,6 @@ const server = http.createServer((req,res) => {
 server.listen(8080, "127.0.0.1", () => {
   console.log("Listening on port 8080");
 });
-*/
-
 
 //----------------API-----------------
 // const data = fs.readFileSync("./dev-data/data.json");
@@ -89,6 +87,53 @@ const server = http.createServer((req,res) => {
     res.end("<h1>PAGE NOT FOUND</h1>");
   }
 })
+server.listen(8080, "127.0.0.1", () => {
+  console.log("Listening on port 8080");
+});
+*/
+
+const replacePlaceholders = (cardData, card) => {
+  let final = card.replaceAll('{%PRODUCTNAME%}', cardData.productName);
+  final = final.replaceAll('{%IMAGE%}', cardData.image);
+  final = final.replaceAll('{%NUTRIENTS%}', cardData.nutrients);
+  final = final.replaceAll('{%FROM%}', cardData.from);
+  final = final.replaceAll('{%QUANTITY%}', cardData.quantity);
+  final = final.replaceAll('{%PRICE%}', cardData.price);
+  final = final.replaceAll('{%ID%}', cardData.id);
+  final = final.replaceAll('{%DESCRIPTION%}', cardData.description);
+
+  if(cardData.organic) return final; //if it IS organic
+  final = final.replaceAll('{%NOT_ORGANIC%}', "not-organic"); //if its NOT
+  return final;
+}
+
+const overview = fs.readFileSync(`${__dirname}/templates/overview.html`, "utf-8");
+const product = fs.readFileSync(`${__dirname}/templates/product.html`, "utf-8");
+const card = fs.readFileSync(`${__dirname}/templates/card.html`, "utf-8");
+
+const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
+const dataObj = JSON.parse(data);
+const server = http.createServer((req,res) => {
+  console.log(req.url)
+  let pathname = req.url;
+  
+  if(pathname === "" || pathname === "/" || pathname === "/overview" ) {
+    res.writeHead(200, {
+      "Content-type": "text/html"
+    });
+    const cardsHTMl = dataObj.map(val => replacePlaceholders(val, card)).join('');
+    const finalResult = overview.replace('{%CARDS%}', cardsHTMl);
+    res.end(finalResult);
+  }
+  else {
+    res.writeHead(404, {
+      "Content-type": "text/html",
+      "header-type": "fucked header"
+    })
+    res.end("<h1>PAGE NOT FOUND</h1>");
+  }
+})
+
 server.listen(8080, "127.0.0.1", () => {
   console.log("Listening on port 8080");
 });
