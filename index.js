@@ -24,13 +24,33 @@ fs.readFile("./txt/start.txt", "utf8", (err, data1) => {
 
 console.log("Reading files...");
 
-*/
-
 //----------------SERVER-----------------
 const server = http.createServer((req,res) => {
   res.end("HELLO, from the dark side🌑");
   // console.log(res);
   // console.log(req);
+})
+
+server.listen(8080, "127.0.0.1", () => {
+  console.log("Listening on port 8080");
+});
+*/
+
+//----------------Routing-----------------
+const server = http.createServer((req,res) => {
+  console.log(req.url)
+  let pathname = req.url;
+
+  if(pathname === "" || pathname === "/" || pathname === "/overview" ) {
+    res.end("<h1>HELLO, from the dark side of OVERVIEW</h1>");
+  }
+  else {
+    res.writeHead(404, {
+      "Content-type": "text/html",
+      "header-type": "fucked header"
+    })
+    res.end("<h1>PAGE NOT FOUND</h1>");
+  }
 })
 
 server.listen(8080, "127.0.0.1", () => {
