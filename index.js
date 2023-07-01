@@ -24,12 +24,15 @@ fs.readFile("./txt/start.txt", "utf8", (err, data1) => {
 
 console.log("Reading files...");
 
-//Server
-const server = http.createServer((req, res) => {
-  res.end("Helloo, from the other side...");
-});
-
-server.listen("8080", "127.0.0.1", () => {
-  console.log("Started listening on port 8080");
-});
 */
+
+//----------------SERVER-----------------
+const server = http.createServer((req,res) => {
+  res.end("HELLO, from the dark side🌑");
+  // console.log(res);
+  // console.log(req);
+})
+
+server.listen(8080, "127.0.0.1", () => {
+  console.log("Listening on port 8080");
+});
